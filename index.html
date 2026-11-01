@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Board</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(120deg, #0756c9, #3988ed);
+            color: white;
+            text-align: center;
+            padding: 35px 15px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        input, select {
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .internship-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000012;
+        }
+
+        .internship-card h3 {
+            color: #0756c9;
+        }
+
+        .internship-card p {
+            line-height: 1.6;
+        }
+
+        button {
+            background: #0756c9;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #003d91;
+        }
+
+        #message {
+            text-align: center;
+            color: #555;
+            margin: 25px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #e5ebf5;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Internship Board</h1>
+        <p>Find Your Next Internship Opportunity</p>
+    </header>
+
+    <main class="container">
+
+        <h2>Available Internships</h2>
+
+        <div class="filters">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search internships..."
+                aria-label="Search internships"
+            >
+
+            <select id="domainFilter" aria-label="Filter by domain">
+                <option value="all">All Domains</option>
+                <option value="python">Python</option>
+                <option value="data science">Data Science</option>
+                <option value="web development">Web Development</option>
+            </select>
+        </div>
+
+        <div class="cards" id="internshipList">
+
+            <article class="internship-card" data-domain="python">
+                <h3>Python Developer Intern</h3>
+                <p>Domain: Python</p>
+                <p>Learn Python programming and build projects.</p>
+                <button onclick="applyNow('Python Developer Intern')">
+                    Apply Now
+                </button>
+            </article>
+
+            <article class="internship-card" data-domain="data science">
+                <h3>Data Science Intern</h3>
+                <p>Domain: Data Science</p>
+                <p>Learn data analysis and data visualization.</p>
+                <button onclick="applyNow('Data Science Intern')">
+                    Apply Now
+                </button>
+            </article>
+
+            <article class="internship-card" data-domain="web development">
+                <h3>Web Development Intern</h3>
+                <p>Domain: Web Development</p>
+                <p>Learn HTML, CSS and JavaScript.</p>
+                <button onclick="applyNow('Web Development Intern')">
+                    Apply Now
+                </button>
+            </article>
+
+        </div>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Internship Board | Created by Student</p>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const domainFilter = document.getElementById("domainFilter");
+        const cards = document.querySelectorAll(".internship-card");
+        const message = document.getElementById("message");
+
+        function filterInternships() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            const selectedDomain = domainFilter.value;
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector("h3").innerText.toLowerCase();
+                const domain = card.dataset.domain;
+
+                const matchesSearch = title.includes(searchText);
+                const matchesDomain =
+                    selectedDomain === "all" ||
+                    domain === selectedDomain;
+
+                if (matchesSearch && matchesDomain) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            if (visibleCount === 0) {
+                message.innerText = "No internships found. Try another search.";
+            } else {
+                message.innerText = visibleCount + " internship(s) found.";
+            }
+        }
+
+        function applyNow(internshipName) {
+            alert("You selected: " + internshipName);
+        }
+
+        searchInput.addEventListener("input", filterInternships);
+        domainFilter.addEventListener("change", filterInternships);
+
+        filterInternships();
+    </script>
+
+</body>
+</html>
