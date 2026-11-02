@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require("express");
 
 const Database = require("better-sqlite3");
@@ -322,3 +323,7 @@ app.listen(PORT, () => {
 
 });
 
+=======
+# intership-board-api
+REST API for managing internship records using Node.js, Express.js, and SQLite. Includes CRUD operations, input validation, and pagination.
+>>>>>>> bb4bc2e4e128888c640912a5811f1953e30bab33
